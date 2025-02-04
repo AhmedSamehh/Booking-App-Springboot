@@ -4,28 +4,27 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "apartments")
+@Table(name = "payments")
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
-public class Apartment {
+public class Payment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "owner_id", nullable = false)
-    private User owner;
+    @OneToOne
+    @JoinColumn(name = "booking_id", nullable = false)
+    private Booking booking;
 
-    private String title;
-    private String description;
-    private String location;
-    private Double price;
+    private Double amount;
 
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    private String transactionId;
+
     public enum Status {
-        AVAILABLE, BOOKED
+        PAID, PENDING, FAILED
     }
 }

@@ -1,20 +1,19 @@
 package com.seha.booking.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
-public class Reservation {
+@Table(name = "bookings")
+@Getter @Setter
+@NoArgsConstructor @AllArgsConstructor
+public class Booking {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private LocalDate checkInDate;
-    private LocalDate checkOutDate;
-    private double totalPrice;
-    private String status; // PENDING, CONFIRMED, CANCELLED
 
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
@@ -24,6 +23,13 @@ public class Reservation {
     @JoinColumn(name = "apartment_id", nullable = false)
     private Apartment apartment;
 
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private LocalDate startDate;
+    private LocalDate endDate;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    public enum Status {
+        PENDING, CONFIRMED, CANCELLED
+    }
 }

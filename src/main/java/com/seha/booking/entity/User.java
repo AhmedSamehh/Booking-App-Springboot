@@ -1,26 +1,29 @@
 package com.seha.booking.entity;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
-import java.util.List;
+import lombok.*;
 
 @Entity
+@Table(name = "users")
+@Getter @Setter
+@NoArgsConstructor @AllArgsConstructor
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String username;
+    private String name;
+
+    @Column(unique = true, nullable = false)
     private String email;
+
     private String password;
-    private String role; // CUSTOMER, OWNER, ADMIN
 
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
-    private List<Apartment> apartments;
+    @Enumerated(EnumType.STRING)
+    private Role role; // CUSTOMER or OWNER
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-    private List<Reservation> reservations;
-
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    public enum Role {
+        CUSTOMER, OWNER
+    }
 }
