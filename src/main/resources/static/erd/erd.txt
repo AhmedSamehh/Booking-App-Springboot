@@ -1,0 +1,6 @@
+User → Apartment (1-N): An owner can have multiple apartments.
+User → Booking (1-N): A customer can make multiple bookings.
+Apartment → Booking (1-N): An apartment can be booked multiple times.
+Booking → Payment (1-1): Each booking has one payment.
+User → Review (1-N): A customer can leave multiple reviews.
+Apartment → Review (1-N): An apartment can receive multiple reviews.
